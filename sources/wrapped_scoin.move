@@ -1,7 +1,7 @@
 module scallop_coin_wrapper::wrapped_scoin {
   // === Imports ===
 
-  use sui::balance::{Self, Balance};
+  use sui::balance::{Self, Balance, Supply};
   use sui::coin::{Coin, CoinMetadata, TreasuryCap};
 
   // === Errors ===
@@ -15,7 +15,7 @@ module scallop_coin_wrapper::wrapped_scoin {
 
   public struct WrappedTreasuryCap<phantom SCoin, phantom WrappedSCoin> has key {
    id: UID,
-   inner: TreasuryCap<WrappedSCoin>,
+   inner: Supply<WrappedSCoin>,
    balance: Balance<SCoin>
   }
 
@@ -40,7 +40,7 @@ module scallop_coin_wrapper::wrapped_scoin {
 
    WrappedTreasuryCap {
     id: object::new(ctx),
-    inner: treasury_cap,
+    inner: treasury_cap.treasury_into_supply(),
     balance: balance::zero()
    }
   }
@@ -52,7 +52,7 @@ module scallop_coin_wrapper::wrapped_scoin {
   // === Public-View Functions ===
 
   public fun total_supply<SCoin, WrappedSCoin>(self: &WrappedTreasuryCap<SCoin, WrappedSCoin>): u64 {
-   self.inner.total_supply()
+   self.inner.supply_value()
   }
 
   public fun total_underlying<SCoin, WrappedSCoin>(self: &WrappedTreasuryCap<SCoin, WrappedSCoin>): u64 {
@@ -66,7 +66,7 @@ module scallop_coin_wrapper::wrapped_scoin {
   ): Coin<WrappedSCoin> {
     let value = underlying.value();
     self.balance.join(underlying.into_balance());
-    self.inner.mint(value, ctx)
+    self.inner.increase_supply(value).into_coin(ctx)
   }
 
   public fun burn<SCoin, WrappedSCoin>(
@@ -75,7 +75,7 @@ module scallop_coin_wrapper::wrapped_scoin {
    ctx: &mut TxContext    
   ): Coin<SCoin> {
     let value = derivative.value();
-    self.inner.burn(derivative);
+    self.inner.decrease_supply(derivative.into_balance());
     self.balance.split(value).into_coin(ctx)
   }
 
