@@ -31,12 +31,12 @@ module scallop_coin_wrapper::wrapped_scoin {
   */
   public fun new<Coin, SCoin, WrappedSCoin>(
    treasury_cap: TreasuryCap<WrappedSCoin>, 
-   coin_coin_metadata: &CoinMetadata<Coin>,
-   wscoin_coin_metadata: &CoinMetadata<WrappedSCoin>,
+   coin_metadata: &CoinMetadata<Coin>,
+   wscoin_metadata: &CoinMetadata<WrappedSCoin>,
    ctx: &mut TxContext
   ): WrappedTreasuryCap<SCoin, WrappedSCoin> {
    assert!(treasury_cap.total_supply() == 0, ETreasuryCapMustHaveNoSupply);
-   assert!(coin_coin_metadata.get_decimals() == wscoin_coin_metadata.get_decimals(), EIncorrectDecimals);
+   assert!(coin_metadata.get_decimals() == wscoin_metadata.get_decimals(), EIncorrectDecimals);
 
    WrappedTreasuryCap {
     id: object::new(ctx),
