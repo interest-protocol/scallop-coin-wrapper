@@ -1,6 +1,7 @@
 [package]
 name = "scallop_coin_wrapper"
 edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
+published-at = "0x181a0ed6fe0326d077ade26bfc6b4db8db17efdc3f1eaf39162a53038815306c"
 # license = ""           # e.g., "MIT", "GPL", "Apache 2.0"
 # authors = ["..."]      # e.g., ["Joe Smith (joesmith@noemail.com)", "John Snow (johnsnow@noemail.com)"]
 
@@ -20,7 +21,7 @@ Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-fram
 # Override = { local = "../conflicting/version", override = true }
 
 [addresses]
-scallop_coin_wrapper = "0x0"
+scallop_coin_wrapper = "0x181a0ed6fe0326d077ade26bfc6b4db8db17efdc3f1eaf39162a53038815306c"
 
 # Named addresses will be accessible in Move as `@name`. They're also exported:
 # for example, `std = "0x1"` is exported by the Standard Library.
