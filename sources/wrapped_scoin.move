@@ -23,14 +23,20 @@ module scallop_coin_wrapper::wrapped_scoin {
 
   // === Public-Mutative Functions ===
 
-  public fun new<SCoin, WrappedSCoin>(
+  /*
+  * @dev E.g. 
+  * Coin => USDC
+  * SCoin => sUSDC
+  * WrappedSCoin => Wrapped sUSDC
+  */
+  public fun new<Coin, SCoin, WrappedSCoin>(
    treasury_cap: TreasuryCap<WrappedSCoin>, 
-   scoin_coin_metadata: &CoinMetadata<SCoin>,
+   coin_coin_metadata: &CoinMetadata<Coin>,
    wscoin_coin_metadata: &CoinMetadata<WrappedSCoin>,
    ctx: &mut TxContext
   ): WrappedTreasuryCap<SCoin, WrappedSCoin> {
    assert!(treasury_cap.total_supply() == 0, ETreasuryCapMustHaveNoSupply);
-   assert!(scoin_coin_metadata.get_decimals() == wscoin_coin_metadata.get_decimals(), EIncorrectDecimals);
+   assert!(coin_coin_metadata.get_decimals() == wscoin_coin_metadata.get_decimals(), EIncorrectDecimals);
 
    WrappedTreasuryCap {
     id: object::new(ctx),
