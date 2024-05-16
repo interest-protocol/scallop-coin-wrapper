@@ -1,6 +1,7 @@
 [package]
 name = "scallop_coin_wrapper"
 edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
+published-at = "0x99e23018d24ede4a476bae3add60cb6531baceaee3dfcf7ce33ba4cdb3c6dd0d"
 # license = ""           # e.g., "MIT", "GPL", "Apache 2.0"
 # authors = ["..."]      # e.g., ["Joe Smith (joesmith@noemail.com)", "John Snow (johnsnow@noemail.com)"]
 
@@ -21,7 +22,7 @@ ScallopProtocol = { local = "../dependencies/sui-lending-protocol/contracts/prot
 # Override = { local = "../conflicting/version", override = true }
 
 [addresses]
-scallop_coin_wrapper = "0x0"
+scallop_coin_wrapper = "0x99e23018d24ede4a476bae3add60cb6531baceaee3dfcf7ce33ba4cdb3c6dd0d"
 protocol = "0xefe8b36d5b2e43728cc323298626b83177803521d195cfb11e15b910e892fddf"
 
 # Named addresses will be accessible in Move as `@name`. They're also exported:
