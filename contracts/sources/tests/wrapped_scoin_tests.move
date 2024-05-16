@@ -6,7 +6,6 @@ module scallop_coin_wrapper::wrapped_scoin_tests {
  use sui::test_scenario::{Self as test, Scenario, next_tx, ctx};
 
  use scallop_coin_wrapper::usdc::{Self, USDC};
- use scallop_coin_wrapper::susdc::{Self, SUSDC};
  use scallop_coin_wrapper::wsusdc::{Self, WSUSDC};
  use scallop_coin_wrapper::invalid_usdc::{Self, INVALID_USDC};
 
@@ -25,7 +24,7 @@ module scallop_coin_wrapper::wrapped_scoin_tests {
    let coin_metadata = test.take_shared<CoinMetadata<USDC>>();
    let wscoin_metadata = test.take_shared<CoinMetadata<WSUSDC>>();
 
-   let mut wrapped_treasury_cap = wrapped_scoin::new<USDC, SUSDC, WSUSDC>(
+   let mut wrapped_treasury_cap = wrapped_scoin::new<USDC, WSUSDC>(
     wrapped_treasury_cap,
     &coin_metadata,
     &wscoin_metadata,
@@ -60,7 +59,6 @@ module scallop_coin_wrapper::wrapped_scoin_tests {
   test.next_tx(@0x0);
   {
    usdc::init_for_testing(test.ctx());
-   susdc::init_for_testing(test.ctx());
    wsusdc::init_for_testing(test.ctx());
    invalid_usdc::init_for_testing(test.ctx());
   };
@@ -82,7 +80,7 @@ module scallop_coin_wrapper::wrapped_scoin_tests {
 
    destroy(wrapped_treasury_cap.mint(1, test.ctx()));
 
-   let wrapped_treasury_cap = wrapped_scoin::new<USDC, SUSDC, WSUSDC>(
+   let wrapped_treasury_cap = wrapped_scoin::new<USDC, WSUSDC>(
     wrapped_treasury_cap,
     &coin_metadata,
     &wscoin_metadata,
@@ -111,7 +109,7 @@ module scallop_coin_wrapper::wrapped_scoin_tests {
    let coin_metadata = test.take_shared<CoinMetadata<INVALID_USDC>>();
    let wscoin_metadata = test.take_shared<CoinMetadata<WSUSDC>>();
 
-   let wrapped_treasury_cap = wrapped_scoin::new<INVALID_USDC, SUSDC, WSUSDC>(
+   let wrapped_treasury_cap = wrapped_scoin::new<INVALID_USDC, WSUSDC>(
     wrapped_treasury_cap,
     &coin_metadata,
     &wscoin_metadata,

@@ -27,34 +27,6 @@ module scallop_coin_wrapper::usdc {
 }
 
 #[test_only]
-module scallop_coin_wrapper::susdc {
-  use sui::coin;
-
-  public struct SUSDC has drop {}
-
-  #[lint_allow(share_owned)]
-  fun init(witness: SUSDC, ctx: &mut TxContext) {
-      let (treasury_cap, metadata) = coin::create_currency<SUSDC>(
-            witness, 
-            6, 
-            b"sUSDC", 
-            b"sUSDC Coin", 
-            b"Scallop interest bearing USDC",
-            option::none(), 
-            ctx
-        );
-
-      transfer::public_transfer(treasury_cap, tx_context::sender(ctx));
-      transfer::public_share_object(metadata);
-  }
-
-  #[test_only]
-  public fun init_for_testing(ctx: &mut TxContext) {
-    init(SUSDC {}, ctx);
-  }
-}
-
-#[test_only]
 module scallop_coin_wrapper::wsusdc {
   use sui::coin;
 

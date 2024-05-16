@@ -4,6 +4,8 @@ module scallop_coin_wrapper::wrapped_scoin {
   use sui::balance::{Self, Balance, Supply};
   use sui::coin::{Coin, CoinMetadata, TreasuryCap};
 
+  use protocol::reserve::MarketCoin;
+
   // === Errors ===
 
   const ETreasuryCapMustHaveNoSupply: u64 = 0;
@@ -29,12 +31,12 @@ module scallop_coin_wrapper::wrapped_scoin {
   * SCoin => sUSDC
   * WrappedSCoin => Wrapped sUSDC
   */
-  public fun new<Coin, SCoin, WrappedSCoin>(
+  public fun new<Coin, WrappedSCoin>(
    treasury_cap: TreasuryCap<WrappedSCoin>, 
    coin_metadata: &CoinMetadata<Coin>,
    wscoin_metadata: &CoinMetadata<WrappedSCoin>,
    ctx: &mut TxContext
-  ): WrappedTreasuryCap<SCoin, WrappedSCoin> {
+  ): WrappedTreasuryCap<MarketCoin<Coin>, WrappedSCoin> {
    assert!(treasury_cap.total_supply() == 0, ETreasuryCapMustHaveNoSupply);
    assert!(coin_metadata.get_decimals() == wscoin_metadata.get_decimals(), EIncorrectDecimals);
 
